@@ -1,2 +1,7 @@
-# act-cli-src
-活动脚手架NPM源码
+# 脚手架安装
+
+npm i act-tpl-cli -g
+
+# 模板创建
+
+act init web_act_tpl projectName
