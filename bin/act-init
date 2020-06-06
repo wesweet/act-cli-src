@@ -5,6 +5,8 @@ const chalk = require('chalk')
 const ora = require('ora')
 const download = require('download-git-repo')
 const tplObj = require(`${__dirname}/../template`)
+const handlebars = require('handlebars')
+const fs = require('fs')
 
 program
   .usage('<template-name> [project-name]')
@@ -15,6 +17,7 @@ if (program.args.length < 1) return program.help()
 // 好比 vue init webpack project-name 的命令一样，第一个参数是 webpack，第二个参数是 project-name
 let templateName = program.args[0]
 let projectName = program.args[1]
+
 // 小小校验一下参数
 if (!tplObj[templateName]) {
   console.log(chalk.red('\n Template does not exit! \n '))
@@ -25,6 +28,7 @@ if (!projectName) {
   return
 }
 
+// 获取下载路径
 url = tplObj[templateName]
 
 console.log(chalk.white('\n Start generating... \n'))
@@ -43,6 +47,10 @@ download (
     }
     // 结束加载图标
     spinner.succeed();
+    const main_index_path = `${projectName}/js/main_index.js`
+    const main_indexContent =  fs.readFileSync(main_index_path, 'utf8')
+    const main_indexResult = handlebars.compile(main_indexContent)({projectName})
+    fs.writeFileSync(main_index_path, main_indexResult)
     console.log(chalk.green('\n Generation completed!'))
     console.log('\n To get started')
     console.log(`\n    cd ${projectName} \n`)
