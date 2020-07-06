@@ -1,6 +1,6 @@
 {
   "name": "act-tpl-cli",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "前端活动脚手架",
   "main": "index.js",
   "scripts": {
